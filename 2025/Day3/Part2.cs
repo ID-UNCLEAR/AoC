@@ -10,36 +10,41 @@ internal static class Part2
 
         foreach (var bank in banks)
         {
-            long joltageOutputOfBank;
-
             var joltageRatings = bank.Select(n => int.Parse(new ReadOnlySpan<char>(in n))).ToArray();
 
-            var joltageRatingDictionary = new Dictionary<int, long>();
+            var temp = new Stack<int>(capacity: 12);
+
             for (var index = 0; index < joltageRatings.Length; index++)
             {
-                var joltageRating = joltageRatings[index];
-                joltageRatingDictionary.Add(index, joltageRating);
+                var rating = joltageRatings[index];
+
+                var remainingSpots = 12 - temp.Count;
+                var remainingJoltageRatingCount = joltageRatings.Length - index;
+
+                if (temp.Count != 0 && remainingJoltageRatingCount > remainingSpots)
+                {
+                    var firstJoltageRating = temp.Peek();
+                    if (rating > firstJoltageRating)
+                    {
+                        temp.Pop();
+                    }
+                }
+
+                if (temp.Count < 12)
+                {
+                    temp.Push(rating);
+                }
             }
 
-            var highestJoltageRatings = joltageRatingDictionary
-                .OrderByDescending(jr => jr.Value)
-                .Take(12)
-                .ToArray();
-
-            var sortedHighestJoltageRatings = highestJoltageRatings
-                .OrderBy(jr => jr.Key)
-                .Select(jr => jr.Value)
-                .ToArray();
+            var result = temp.Reverse().ToArray();
 
             var stringBuilder = new StringBuilder();
-
-            foreach (var joltageRating in sortedHighestJoltageRatings)
+            foreach (var val in result)
             {
-                stringBuilder.Append(joltageRating);
+                stringBuilder.Append(val);
             }
 
-            joltageOutputOfBank = long.Parse(stringBuilder.ToString());
-
+            var joltageOutputOfBank = long.Parse(stringBuilder.ToString());
             totalJoltageOutput += joltageOutputOfBank;
         }
 
