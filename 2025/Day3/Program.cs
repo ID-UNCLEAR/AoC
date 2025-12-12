@@ -1,36 +1,9 @@
-﻿var totalJoltageOutput = 0;
+﻿using Day3;
 
-foreach (var bank in File.ReadLines("input.txt"))
-{
-    var joltageOutputOfBank = 0;
+var banks = File.ReadLines("input.txt");
 
-    var joltageRatings = bank.Select(n => int.Parse(new ReadOnlySpan<char>(in n))).ToArray();
+var totalJoltageOuputPart1 = Part1.CalculateTotalJoltageOutput(banks);
+Console.WriteLine($"The sum of invalid ids for part 1 is: {totalJoltageOuputPart1}");
 
-    for (var index = 1; index <= 9; index++)
-    {
-        if (!joltageRatings.Contains(index))
-        {
-            continue;
-        }
-
-        var highestJoltageRatingIndex = joltageRatings.IndexOf(index) + 1; // To skip the highest number being included twice
-        var remainingJoltageRatings = joltageRatings[highestJoltageRatingIndex..];
-        if (remainingJoltageRatings.Length == 0)
-        {
-            continue;
-        }
-
-        var secondHighestJoltageRating = remainingJoltageRatings.Max();
-
-        var projectedOutputOfBank = int.Parse($"{index}{secondHighestJoltageRating}");
-
-        if (projectedOutputOfBank > joltageOutputOfBank)
-        {
-            joltageOutputOfBank = projectedOutputOfBank;
-        }
-    }
-
-    totalJoltageOutput += joltageOutputOfBank;
-}
-
-Console.WriteLine($"Total output joltage is {totalJoltageOutput}");
+var totalJoltageOuputPart2 = Part2.CalculateTotalJoltageOutput(banks);
+Console.WriteLine($"The sum of invalid ids for part 2 is: {totalJoltageOuputPart2}");
