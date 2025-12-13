@@ -4,48 +4,42 @@ namespace Day3;
 
 internal static class Part2
 {
-    public static long CalculateTotalJoltageOutput(IEnumerable<string> banks)
+    private const int MaximumJoltageCountPerBank = 12;
+
+    public static long CalculateTotalJoltageOutput(IEnumerable<string> joltageBanks)
     {
         var totalJoltageOutput = 0L;
 
-        foreach (var bank in banks)
+        foreach (var joltageBank in joltageBanks)
         {
-            var joltageRatings = bank.Select(n => int.Parse(new ReadOnlySpan<char>(in n))).ToArray();
-
-            var temp = new Stack<int>(capacity: 12);
+            var joltageRatings = joltageBank.Select(c => c - '0').ToArray();
+            var optimalJoltageRatingSequence = new List<int>(MaximumJoltageCountPerBank);
 
             for (var index = 0; index < joltageRatings.Length; index++)
             {
-                var rating = joltageRatings[index];
+                var currentJoltageRating = joltageRatings[index];
 
-                var remainingSpots = 12 - temp.Count;
-                var remainingJoltageRatingCount = joltageRatings.Length - index;
-
-                if (temp.Count != 0 && remainingJoltageRatingCount > remainingSpots)
+                while (
+                    optimalJoltageRatingSequence.Count > 0 &&
+                    currentJoltageRating > optimalJoltageRatingSequence[^1] &&
+                    optimalJoltageRatingSequence.Count - 1 + (joltageRatings.Length - index) >= MaximumJoltageCountPerBank)
                 {
-                    var firstJoltageRating = temp.Peek();
-                    if (rating > firstJoltageRating)
-                    {
-                        temp.Pop();
-                    }
+                    optimalJoltageRatingSequence.RemoveAt(optimalJoltageRatingSequence.Count - 1);
                 }
 
-                if (temp.Count < 12)
+                if (optimalJoltageRatingSequence.Count < MaximumJoltageCountPerBank)
                 {
-                    temp.Push(rating);
+                    optimalJoltageRatingSequence.Add(currentJoltageRating);
                 }
             }
 
-            var result = temp.Reverse().ToArray();
-
-            var stringBuilder = new StringBuilder();
-            foreach (var val in result)
+            var stringBuilder = new StringBuilder(MaximumJoltageCountPerBank);
+            foreach (var joltageRating in optimalJoltageRatingSequence)
             {
-                stringBuilder.Append(val);
+                stringBuilder.Append(joltageRating);
             }
 
-            var joltageOutputOfBank = long.Parse(stringBuilder.ToString());
-            totalJoltageOutput += joltageOutputOfBank;
+            totalJoltageOutput += long.Parse(stringBuilder.ToString());
         }
 
         return totalJoltageOutput;
