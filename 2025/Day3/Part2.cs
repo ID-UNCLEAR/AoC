@@ -1,45 +1,44 @@
-﻿using System.Text;
-
-namespace Day3;
+﻿namespace Day3;
 
 internal static class Part2
 {
-    private const int MaximumJoltageCountPerBank = 12;
+    private const byte MaximumJoltageCountPerBank = 12;
 
     public static long CalculateTotalJoltageOutput(IEnumerable<string> joltageBanks)
     {
         var totalJoltageOutput = 0L;
+        Span<int> optimalJoltageRatingSequence = stackalloc int[MaximumJoltageCountPerBank];
 
         foreach (var joltageBank in joltageBanks)
         {
-            var joltageRatings = joltageBank.Select(c => c - '0').ToArray();
-            var optimalJoltageRatingSequence = new List<int>(MaximumJoltageCountPerBank);
+            var joltageRatingsLength = joltageBank.Length;
+            var sequenceCount = 0;
 
-            for (var index = 0; index < joltageRatings.Length; index++)
+            for (var index = 0; index < joltageRatingsLength; index++)
             {
-                var currentJoltageRating = joltageRatings[index];
+                var currentJoltageRating = joltageBank[index] - '0';
 
                 while (
-                    optimalJoltageRatingSequence.Count > 0 &&
-                    currentJoltageRating > optimalJoltageRatingSequence[^1] &&
-                    optimalJoltageRatingSequence.Count - 1 + (joltageRatings.Length - index) >= MaximumJoltageCountPerBank)
+                    sequenceCount > 0 &&
+                    currentJoltageRating > optimalJoltageRatingSequence[sequenceCount - 1] &&
+                    sequenceCount - 1 + (joltageRatingsLength - index) >= MaximumJoltageCountPerBank)
                 {
-                    optimalJoltageRatingSequence.RemoveAt(optimalJoltageRatingSequence.Count - 1);
+                    sequenceCount--;
                 }
 
-                if (optimalJoltageRatingSequence.Count < MaximumJoltageCountPerBank)
+                if (sequenceCount < MaximumJoltageCountPerBank)
                 {
-                    optimalJoltageRatingSequence.Add(currentJoltageRating);
+                    optimalJoltageRatingSequence[sequenceCount++] = currentJoltageRating;
                 }
             }
 
-            var stringBuilder = new StringBuilder(MaximumJoltageCountPerBank);
-            foreach (var joltageRating in optimalJoltageRatingSequence)
+            var joltageOutput = 0L;
+            for (var i = 0; i < sequenceCount; i++)
             {
-                stringBuilder.Append(joltageRating);
+                joltageOutput = (joltageOutput * 10) + optimalJoltageRatingSequence[i];
             }
 
-            totalJoltageOutput += long.Parse(stringBuilder.ToString());
+            totalJoltageOutput += joltageOutput;
         }
 
         return totalJoltageOutput;
