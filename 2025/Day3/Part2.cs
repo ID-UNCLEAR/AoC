@@ -4,10 +4,10 @@ internal static class Part2
 {
     private const byte MaximumJoltageCountPerBank = 12;
 
-    public static long CalculateTotalJoltageOutput(IEnumerable<string> joltageBanks)
+    public static long CalculateTotalJoltageOutput(ReadOnlySpan<string> joltageBanks)
     {
         var totalJoltageOutput = 0L;
-        Span<int> optimalJoltageRatingSequence = stackalloc int[MaximumJoltageCountPerBank];
+        Span<byte> optimalJoltageRatingSequence = stackalloc byte[MaximumJoltageCountPerBank];
 
         foreach (var joltageBank in joltageBanks)
         {
@@ -16,7 +16,7 @@ internal static class Part2
 
             for (var index = 0; index < joltageRatingsLength; index++)
             {
-                var currentJoltageRating = joltageBank[index] - '0';
+                var currentJoltageRating = (byte)(joltageBank[index] - '0');
 
                 while (
                     sequenceCount > 0 &&
