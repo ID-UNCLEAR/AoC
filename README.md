@@ -1,2 +1,2 @@
 # Advent of Code
-Advent of code of multiple years, written in c#.
+Advent of code, written in c#.
