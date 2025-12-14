@@ -16,5 +16,4 @@ if (totalJoltageOuputPart2 != 171975854269367)
     throw new InvalidOperationException("Answer is incorrect");
 }
 
-BenchmarkRunner.Run<Part1Benchmark>();
-BenchmarkRunner.Run<Part2Benchmark>();
+BenchmarkRunner.Run<Benchmark>();

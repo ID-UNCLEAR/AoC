@@ -5,7 +5,7 @@ namespace Day3;
 
 [SimpleJob(RuntimeMoniker.Net10_0)]
 [MemoryDiagnoser]
-public class Part1Benchmark
+public class Benchmark
 {
     private string[] _banks = [];
 
@@ -19,5 +19,11 @@ public class Part1Benchmark
     public int Day3Part1()
     {
         return Part1.CalculateTotalJoltageOutput(_banks);
+    }
+
+    [Benchmark]
+    public long Day3Part2()
+    {
+        return Part2.CalculateTotalJoltageOutput(_banks);
     }
 }

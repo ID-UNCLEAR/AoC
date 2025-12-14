@@ -17,5 +17,4 @@ if (sumOfInvalidIdsPart2 != 35950619148)
     throw new InvalidOperationException("Answer is incorrect");
 }
 
-BenchmarkRunner.Run<Part1Benchmark>();
-BenchmarkRunner.Run<Part2Benchmark>();
+BenchmarkRunner.Run<Benchmark>();

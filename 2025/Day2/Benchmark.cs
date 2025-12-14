@@ -5,7 +5,7 @@ namespace Day2;
 
 [SimpleJob(RuntimeMoniker.Net10_0)]
 [MemoryDiagnoser]
-public class Part1Benchmark
+public class Benchmark
 {
     private string[] _ranges = [];
 
@@ -20,5 +20,11 @@ public class Part1Benchmark
     public long Day2Part1()
     {
         return Part1.CalculateSumOfInvalidIds(_ranges);
+    }
+
+    [Benchmark]
+    public long Day2Part2()
+    {
+        return Part2.CalculateSumOfInvalidIds(_ranges);
     }
 }
