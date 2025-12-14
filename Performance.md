@@ -4,6 +4,10 @@ Performance is measured using [BenchmarkDotNet](https://benchmarkdotnet.org/inde
 ## 2025
 
 ### Day 1
+| Method    | Mean     | Error     | StdDev    | Gen0   | Allocated |
+|---------- |---------:|----------:|----------:|-------:|----------:|
+| Day1Part1 | 36.57 μs | 0.720 μs  | 1.421 μs  | 8.3008 | 136.29 KB |
+| Day1Part2 | 1.393 ms | 0.0149 ms | 0.0132 ms | 7.8125 | 136.32 KB |
 
 ### Day 2
 | Method    | Mean     | Error    | StdDev   | Gen0       | Allocated |

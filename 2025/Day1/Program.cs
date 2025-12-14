@@ -1,29 +1,18 @@
-﻿var dialIndex = 50;
-var numberOfZeros = 0;
+﻿using BenchmarkDotNet.Running;
+using Day1;
 
-foreach (var line in File.ReadLines("input.txt"))
+var rotationInstructions = await File.ReadAllLinesAsync("input.txt");
+var numberOfZerosPart1 = Part1.CalculateAmountOfZeroPositions(rotationInstructions);
+if (numberOfZerosPart1 != 1071)
 {
-    var direction = line[0];
-    var distance = int.Parse(line[1..]);
-
-    if (direction == 'L')
-    {
-        dialIndex = (dialIndex - distance) % 100;
-
-        if (dialIndex < 0)
-        {
-            dialIndex += 100;
-        }
-    }
-    else
-    {
-        dialIndex = (dialIndex + distance) % 100;
-    }
-
-    if (dialIndex == 0)
-    {
-        numberOfZeros++;
-    }
+    throw new InvalidOperationException("Answer is incorrect");
 }
 
-Console.WriteLine(numberOfZeros);
+var numberOfZerosPart2 = Part2.CalculateAmountOfZeroPositions(rotationInstructions);
+if (numberOfZerosPart2 != 6700)
+{
+    throw new InvalidOperationException("Answer is incorrect");
+}
+
+BenchmarkRunner.Run<Part1Benchmark>();
+BenchmarkRunner.Run<Part2Benchmark>();
