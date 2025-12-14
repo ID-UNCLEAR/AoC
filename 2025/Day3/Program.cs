@@ -1,9 +1,20 @@
-﻿using Day3;
+﻿using BenchmarkDotNet.Running;
 
-var banks = File.ReadLines("input.txt");
+using Day3;
+
+var banks = await File.ReadAllLinesAsync("input.txt");
 
 var totalJoltageOuputPart1 = Part1.CalculateTotalJoltageOutput(banks);
-Console.WriteLine($"The sum of invalid ids for part 1 is: {totalJoltageOuputPart1}");
+if (totalJoltageOuputPart1 != 17430)
+{
+    throw new InvalidOperationException("Answer is incorrect");
+}
 
 var totalJoltageOuputPart2 = Part2.CalculateTotalJoltageOutput(banks);
-Console.WriteLine($"The sum of invalid ids for part 2 is: {totalJoltageOuputPart2}");
+if (totalJoltageOuputPart2 != 171975854269367)
+{
+    throw new InvalidOperationException("Answer is incorrect");
+}
+
+BenchmarkRunner.Run<Part1Benchmark>();
+BenchmarkRunner.Run<Part2Benchmark>();

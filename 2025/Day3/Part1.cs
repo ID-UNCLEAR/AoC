@@ -2,15 +2,14 @@
 
 internal static class Part1
 {
-    public static int CalculateTotalJoltageOutput(IEnumerable<string> banks)
+    public static int CalculateTotalJoltageOutput(IEnumerable<string> joltageBanks)
     {
         var totalJoltageOutput = 0;
 
-        foreach (var bank in banks)
+        foreach (var joltageBank in joltageBanks)
         {
             var joltageOutputOfBank = 0;
-
-            var joltageRatings = bank.Select(n => int.Parse(new ReadOnlySpan<char>(in n))).ToArray();
+            var joltageRatings = joltageBank.Select(c => c - '0').ToArray();
 
             for (var index = 1; index <= 9; index++)
             {

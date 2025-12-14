@@ -1,2 +1,2 @@
-# AoC2025
-Advent of Code 2025 in C#
+# Advent of Code
+Advent of code of multiple years, written in c#.
