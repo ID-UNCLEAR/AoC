@@ -15,10 +15,10 @@ AMD Ryzen 5 9600X 3.90GHz, 1 CPU, 12 logical and 6 physical cores
 Job=.NET 10.0  Runtime=.NET 10.0  
 
 ```
-| Method    | Mean        | Error     | StdDev    | Gen0   | Allocated |
-|---------- |------------:|----------:|----------:|-------:|----------:|
-| Day1Part1 |    38.99 μs |  0.757 μs |  2.171 μs | 8.3008 | 136.29 KB |
-| Day1Part2 | 1,407.90 μs | 24.964 μs | 22.130 μs | 7.8125 | 136.32 KB |
+| Method    | Mean         | Error     | StdDev    | Gen0   | Allocated |
+|---------- |-------------:|----------:|----------:|-------:|----------:|
+| Day1Part1 |     9.287 us | 0.0281 us | 0.0235 us |      - |         - |
+| Day1Part2 | 1,380.936 us | 4.3066 us | 3.5962 us | 7.8125 |  139592 B |
 
 ### Day 2
 ```

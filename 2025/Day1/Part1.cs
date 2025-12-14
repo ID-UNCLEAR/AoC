@@ -2,7 +2,7 @@
 
 internal static class Part1
 {
-    public static short CalculateAmountOfZeroPositions(IEnumerable<string> rotationInstructions)
+    public static short CalculateAmountOfZeroPositions(ReadOnlySpan<string> rotationInstructions)
     {
         var dialPosition = 50;
         short numberOfZeros = 0;
@@ -10,21 +10,14 @@ internal static class Part1
         foreach (var rotationInstruction in rotationInstructions)
         {
             var direction = rotationInstruction[0];
-            var distance = short.Parse(rotationInstruction[1..]);
+            var distance = 0;
 
-            if (direction == 'L')
+            for (var i = 1; i < rotationInstruction.Length; i++)
             {
-                dialPosition = (dialPosition - distance) % 100;
+                distance = (distance * 10) + (rotationInstruction[i] - '0');
+            }
 
-                if (dialPosition < 0)
-                {
-                    dialPosition += 100;
-                }
-            }
-            else
-            {
-                dialPosition = (dialPosition + distance) % 100;
-            }
+            dialPosition = CalculateNewPosition(dialPosition, direction, distance);
 
             if (dialPosition == 0)
             {
@@ -33,5 +26,22 @@ internal static class Part1
         }
 
         return numberOfZeros;
+    }
+
+    private static int CalculateNewPosition(int currentPosition, char direction, int distance)
+    {
+        if (direction == 'L')
+        {
+            distance = -distance;
+        }
+
+        currentPosition = (currentPosition + distance) % 100;
+
+        if (currentPosition < 0)
+        {
+            currentPosition += 100;
+        }
+
+        return currentPosition;
     }
 }
