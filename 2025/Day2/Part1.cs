@@ -2,25 +2,19 @@
 
 internal static class Part1
 {
-    public static long CalculateSumOfInvalidIds(string[] ranges)
+    public static long CalculateSumOfInvalidIds(ReadOnlySpan<string> ranges)
     {
         var sumOfInvalidIds = 0L;
 
         foreach (var range in ranges)
         {
-            var idRange = range.Split('-');
-            var firstId = long.Parse(idRange[0]);
-            var lastId = long.Parse(idRange[1]);
+            var dashIndex = range.IndexOf('-');
+            var firstId = long.Parse(range.AsSpan(0, dashIndex));
+            var lastId = long.Parse(range.AsSpan(dashIndex + 1));
 
-            for (var currentId = firstId; lastId >= currentId; currentId++)
+            for (var currentId = firstId; currentId <= lastId; currentId++)
             {
-                var currentIdString = currentId.ToString();
-                var halfSize = currentIdString.Length / 2;
-
-                var firstHalf = currentIdString[..halfSize];
-                var secondHalf = currentIdString[halfSize..];
-
-                if (firstHalf == secondHalf)
+                if (HasMatchingHalves(currentId))
                 {
                     sumOfInvalidIds += currentId;
                 }
@@ -28,5 +22,21 @@ internal static class Part1
         }
 
         return sumOfInvalidIds;
+    }
+
+    private static bool HasMatchingHalves(long number)
+    {
+        Span<char> buffer = stackalloc char[20];
+        number.TryFormat(buffer, out var charsWritten);
+
+        if (charsWritten % 2 != 0)
+        {
+            return false;
+        }
+
+        var halfSize = charsWritten / 2;
+        var span = buffer[..charsWritten];
+
+        return span[..halfSize].SequenceEqual(span[halfSize..]);
     }
 }
