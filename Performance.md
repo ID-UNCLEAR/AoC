@@ -6,6 +6,10 @@ Performance is measured using [BenchmarkDotNet](https://benchmarkdotnet.org/inde
 ### Day 1
 
 ### Day 2
+| Method    | Mean     | Error    | StdDev   | Gen0       | Allocated |
+|---------- |---------:|---------:|---------:|-----------:|----------:|
+| Day2Part1 | 22.88 ms | 0.264 ms | 0.220 ms | 11625.0000 | 185.94 MB |
+| Day2Part2 | 49.99 ms | 0.927 ms | 1.496 ms | 21909.0909 | 350.25 MB |
 
 ### Day 3
 | Method    | Mean     | Error    | StdDev   | Gen0    | Allocated |
